@@ -7,9 +7,9 @@ import threading
 import webbrowser
 import os
 import sys
-
+import time
+from win10toast import ToastNotifier
 import pystray
-from plyer import notification
 from PIL import Image
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -41,12 +41,13 @@ def main():
     t = threading.Thread(target=run_server, daemon=True)
     t.start()
 
-    notification.notify(
-        title="Depth Controller",
-        message="Ready at http://localhost:5000/",
-        app_name="Depth Controller",
-        timeout=5,
-    ) # type: ignore
+    time.sleep(1)
+    ToastNotifier().show_toast(
+        "Depth Controller",
+        "Ready at https://saveyourgame.ddns.net",
+        duration=5,
+        threaded=True,
+    )
 
     menu = pystray.Menu(
         pystray.MenuItem("Open Controller", open_dashboard, default=True),
