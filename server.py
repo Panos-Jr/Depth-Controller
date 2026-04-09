@@ -1092,7 +1092,6 @@ function applyState(data) {{
   }}
 }}
 
-// Poll
 async function poll() {{
   try {{
     const r = await fetch('/status');
@@ -1120,6 +1119,12 @@ async function doRestart() {{
       allow_bots: document.getElementById('opt-bots').checked,
     }})
   }});
+
+  // Sync rotation index from server
+  const r = await fetch('/maps');
+  const d = await r.json();
+  rotationIndex = d.current_index ?? rotationIndex;
+  updateNextMap();
 
   setTimeout(poll, 500);
 }}
