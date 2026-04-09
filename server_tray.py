@@ -25,7 +25,7 @@ def load_icon() -> Image.Image:
 
 def run_server():
     write_status("idle", "Server controller started")
-    serve(app, host="127.0.0.1", port=PORT)
+    serve(app, host="0.0.0.0", port=PORT)
 
 
 def open_dashboard(icon, item):
