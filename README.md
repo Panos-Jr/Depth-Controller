@@ -1,4 +1,4 @@
-# ⚓ Depth Controller
+# <img src="https://github.com/Panos-Jr/Depth-Controller/blob/main/anchor.png" style="height:2.1rem;vertical-align:middle;margin-right:.6rem;"> Depth Controller
 Self-hosted flask server that allows you to configure your dedicated server for <b>Depth</b>. 
 Details about the game can be found <a href=https://store.steampowered.com/app/274940/Depth/>here</a>.
 <br>
