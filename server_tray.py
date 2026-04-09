@@ -9,6 +9,7 @@ import os
 import sys
 
 import pystray
+from plyer import notification
 from PIL import Image
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -39,6 +40,13 @@ def quit_app(icon, item):
 def main():
     t = threading.Thread(target=run_server, daemon=True)
     t.start()
+
+    notification.notify(
+        title="Depth Controller",
+        message="Ready at http://localhost:5000/",
+        app_name="Depth Controller",
+        timeout=5,
+    ) # type: ignore
 
     menu = pystray.Menu(
         pystray.MenuItem("Open Controller", open_dashboard, default=True),
