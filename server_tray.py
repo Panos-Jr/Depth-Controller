@@ -8,9 +8,9 @@ import webbrowser
 import os
 import sys
 import time
-from win10toast import ToastNotifier
 import pystray
 from PIL import Image
+import subprocess
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from server import app, write_status, app_dir
@@ -37,18 +37,28 @@ def quit_app(icon, item):
     os._exit(0)
 
 
+import subprocess
+
+def notify(title: str, message: str):
+    subprocess.Popen([
+        "powershell", "-WindowStyle", "Hidden", "-Command",
+        f"""
+        [Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType=WindowsRuntime] | Out-Null
+        $template = [Windows.UI.Notifications.ToastNotificationManager]::GetTemplateContent([Windows.UI.Notifications.ToastTemplateType]::ToastText02)
+        $template.SelectSingleNode('//text[@id=1]').InnerText = '{title}'
+        $template.SelectSingleNode('//text[@id=2]').InnerText = '{message}'
+        $toast = [Windows.UI.Notifications.ToastNotification]::new($template)
+        [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier('Depth Controller').Show($toast)
+        """
+    ])
+
 def main():
     t = threading.Thread(target=run_server, daemon=True)
     t.start()
 
     time.sleep(1)
-    ToastNotifier().show_toast(
-        "Depth Controller",
-        "Ready at https://saveyourgame.ddns.net",
-        duration=5,
-        threaded=True,
-    )
-
+    notify("Depth Controller", "Server is ready at http://127.0.0.1:5000/.")
+    
     menu = pystray.Menu(
         pystray.MenuItem("Open Controller", open_dashboard, default=True),
         pystray.Menu.SEPARATOR,
