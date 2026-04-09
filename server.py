@@ -1160,4 +1160,4 @@ def map_image(map_name, filename):
 
 if __name__ == "__main__":
     write_status("idle", "Server controller started")
-    serve(app, host="127.0.0.1", port=5000)
+    serve(app, host="0.0.0.0", port=5000)
