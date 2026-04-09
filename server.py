@@ -136,7 +136,6 @@ def read_status() -> dict:
 
 
 def restart_sequence(map_name: str, is_lan: bool, num_humans: int, allow_bots: bool):
-    """Runs in a background thread."""
     try:
         _server_state["current_map"] = map_name
 
@@ -238,7 +237,6 @@ def browse_folder():
 def status():
     return jsonify(read_status())
 
-
 @app.route("/maps")
 def maps():
     return jsonify({
@@ -291,7 +289,6 @@ def restart():
 
 @app.route("/settings", methods=["POST"])
 def settings():
-    """Update settings without restarting."""
     body = request.get_json(silent=True) or {}
 
     if "rotation_on" in body:
@@ -327,6 +324,7 @@ def dashboard():
     html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
+<link rel="icon" type="image/png" href="/favicon.ico">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Depth Server Controller</title>
