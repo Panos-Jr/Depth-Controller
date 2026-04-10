@@ -51,7 +51,7 @@ Your `caddy` folder should like this, except yours won't have `Caddy.log`.
 Once you've got <b>Depth Controller</b> open, you can run the command `caddy run --config Caddyfile`
 and the web client should be accessible using your domain.
 
-Now take that domain, and apply it to <a href=https://github.com/Panos-Jr/Depth-Launcher><b>Depth Launcher</b></a>, which will check when the server restarts and will restart your game for you. Or start it if it isn't already, and connect to the dedicated server. (Keep <b>Depth Launcher</b> in your game files, inside the Depth folder)
+Now take that domain, and apply it to <a href=https://github.com/Panos-Jr/Depth-Launcher><b>Depth Launcher</b></a>, which will check when the server restarts and will restart your game for you. Or start it if it isn't already, and connect to the dedicated server. (Keep <b>DepthLauncher.exe</b> in your game files, inside the Depth folder)
 
 ## Issues
 
