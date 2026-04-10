@@ -6,6 +6,7 @@ The web client features `map rotation` which can be toggled, allowing you to aut
 
 ## Requirements
 
+Ports `80` and `443` forwarded on your router if you're using Caddy
 Your dedicated server will be using port `7777` make sure that's port forwarded.
 
 Check that your IP is static.
@@ -30,6 +31,7 @@ Quick note: If you are planning to do this on a LAN with your friends, you don't
 
 ## Caddy
 To get the web client accessible outside your home network, you'll need to setup a reverse proxy, I'll be showing you how to get started with Caddy, though any alternatives like nginx should suffice.
+First, ports `80` and `443` should be forwarded on your router
 
 Download Caddy from <a href="https://caddyserver.com/">here</a>, and ideally install it on the root of your C:\ drive. `C:\caddy` would be a good place. 
 
