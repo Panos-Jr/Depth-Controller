@@ -7,6 +7,7 @@ The web client features `map rotation` which can be toggled, allowing you to aut
 ## Requirements
 
 The web client is using port `5000` which will need to be port forwarded on your router, plus your dedicated server will be using port `7777` make sure that's also port forwarded
+
 Check that your IP is static.
 
 ## Accessing the web client
