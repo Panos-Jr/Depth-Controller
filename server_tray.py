@@ -20,7 +20,7 @@ PORT        = 5000
 DASHBOARD_URL = f"http://127.0.0.1:{PORT}/"
 
 def load_icon() -> Image.Image:
-    icon_path = os.path.join(get_resource_path(), "anchor.png")
+    icon_path = os.path.join(get_resource_path(""), "anchor.png")
     return Image.open(icon_path)
 
 def run_server():
