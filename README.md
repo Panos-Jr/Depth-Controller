@@ -28,7 +28,7 @@ If you didn't know already, the developers of Depth haven't included rounds with
 
 <img width="362" height="332" alt="image" src="https://github.com/user-attachments/assets/82207bbe-44b6-44ae-b152-bf6ae80decf9" />
 
-OR if you really want to avoid using <b>Caddy</b> you can use a LAN VPN, like Radmin or Hamachi. Just simply forward port 5000 on your router, and on the launcher type your VPN address. 
+OR if you really want to avoid using <b>Caddy</b> you can use a LAN VPN, like Radmin or Hamachi, and on the launcher type your VPN address. 
 
 
 
