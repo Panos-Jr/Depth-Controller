@@ -31,6 +31,7 @@ Quick note: If you are planning to do this on a LAN with your friends, you don't
 
 
 ## Caddy
+### Getting the web client online
 To get the web client accessible outside your home network, you'll need to setup a reverse proxy, I'll be showing you how to get started with Caddy, though any alternatives like nginx should suffice.
 First, ports `80` and `443` should be forwarded on your router. (Port forwarding 5000, to access outside your network is <b>NOT</b> recommended, just warning you, using reverse-proxies like Caddy is best practice) 
 
