@@ -4,12 +4,17 @@ Details about the game can be found <a href=https://store.steampowered.com/app/2
 <br>
 The web client features `map rotation` which can be toggled, allowing you to automatically move to the next map (on the list) after restarting
 
+## Requirements
+
+The web client is using port <b>5000</b> which will need to be port forwarded on your router, plus your dedicated server will be using port 7777 make sure that's also port forwarded
+Check that your IP is static.
+
 ## Accessing the web client
 The app itself will be running in the background and can be found on your tray, as shown.
 Accessing the web client is simple, just right-click and press <b>Open Controller</b> <br>
 <img width="234" height="114" alt="image" src="https://github.com/user-attachments/assets/9f6d2a6d-c894-4dd7-828e-16002e33a494" />
 
-or you can access it via <a href="http://localhost:5000/">http://localhost:5000/</a>, the web client is using port <b>5000</b> which will need to be port forwarded on your router, and make sure your IP is static.
+or you can access it via <a href="http://localhost:5000/">http://localhost:5000/</a>.
 
 ## UI
 <img width="1920" height="945" alt="image" src="https://github.com/user-attachments/assets/608a2572-8f68-417a-85a2-fc768315fc53" />
