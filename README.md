@@ -10,7 +10,7 @@ Ports `80` and `443` forwarded on your router if you're using Caddy
 
 Set an inbound rule on your firewall for port 5000
 
-This command works as well if you don't want to do it manually: `netsh advfirewall firewall add rule name="Depth Controller" dir=in action=allow protocol=TCP localport=5000`
+This command works as well if you don't want to do it manually: `netsh advfirewall firewall add rule name="Depth Controller" dir=in action=allow protocol=TCP localport=5000` (run as admin)
 
 Your dedicated server will be using port `7777` make sure that's port forwarded.
 
