@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/png" href="/anchor.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Depth Server Controller</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<header>
+  <h1><img src="/anchor.png" style="height:2rem;vertical-align:middle;margin-right:.6rem;">Depth Controller</h1>
+  <span class="status-pill" id="header-pill">—</span>
+</header>
+
+<div class="grid">
+
+  <!-- Map picker -->
+  <div class="card">
+    <div class="card-title">Select Map</div>
+    <div class="map-grid" id="map-grid"></div>
+  </div>
+
+  <!-- Right panel -->
+  <div class="panel">
+
+    <!-- Server state -->
+    <div class="card">
+      <div class="card-title">Server Status</div>
+      <div class="state-display" id="state-text">—</div>
+      <div class="state-msg" id="state-msg"></div>
+      <div class="state-time" id="state-time"></div>
+      <div class="progress-wrap">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+    </div>
+
+    <!-- Options -->
+    <div class="card">
+      <div class="card-title">Options</div>
+
+      <div class="option-row option-row-stack">
+        <div>
+          <div class="option-label">Game Folder</div>
+          <div class="option-sub">Select the location of your Depth installation</div>
+        </div>
+        <div class="path-row">
+          <input type="text" id="opt-game-dir" class="text-control" placeholder="Select Depth folder...">
+          <button type="button" class="btn-secondary" id="btn-browse-folder">Browse</button>
+        </div>
+      </div>
+
+      <div class="option-row option-row-stack">
+        <div>
+          <div class="option-label">Human Players</div>
+          <div class="option-sub">Choose 1 to 6 human slots</div>
+        </div>
+        <select id="opt-humans" class="select-control">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+        </select>
+      </div>
+
+      <div class="option-row">
+        <div>
+          <div class="option-label">Allow Bots</div>
+          <div class="option-sub">Disable to launch with ?NoBots</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="opt-bots">
+          <div class="toggle-track"></div>
+        </label>
+      </div>
+
+      <div class="option-row">
+        <div>
+          <div class="option-label">LAN Match</div>
+          <div class="option-sub">Restricts to local network</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="opt-lan">
+          <div class="toggle-track"></div>
+        </label>
+      </div>
+
+      <div class="option-row">
+        <div>
+          <div class="option-label">Map Rotation</div>
+          <div class="option-sub">Auto-advance map each restart</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="opt-rotation">
+          <div class="toggle-track"></div>
+        </label>
+      </div>
+
+      <div class="next-map-row hidden" id="next-map-row">
+        <span class="next-arrow">NEXT →</span>
+        <span id="next-map-label">—</span>
+      </div>
+    </div>
+
+    <!-- Restart -->
+    <div class="card">
+      <button class="btn-restart" id="btn-restart" onclick="doRestart()">
+        ↺  Restart Server
+      </button>
+    </div>
+
+  </div>
+</div>
+
+__INLINE_DATA__
+
+<script src="/static/dashboard.js"></script>
+</body>
+</html>
