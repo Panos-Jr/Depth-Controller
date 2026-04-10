@@ -44,7 +44,7 @@ example.com {
 }
 ```
 
-Your `caddy` folder should like this, except yours won't have `caddy.log`,
+Your `caddy` folder should like this, except yours won't have `Caddy.log`,
 
 <img width="673" height="103" alt="image" src="https://github.com/user-attachments/assets/67263d47-971c-4cf8-9505-e842169e7799" />
 
