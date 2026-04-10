@@ -7,6 +7,7 @@ The web client features `map rotation` which can be toggled, allowing you to aut
 ## Requirements
 
 Ports `80` and `443` forwarded on your router if you're using Caddy
+
 Your dedicated server will be using port `7777` make sure that's port forwarded.
 
 Check that your IP is static.
