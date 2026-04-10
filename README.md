@@ -16,7 +16,10 @@ or you can access it via <a href="http://localhost:5000/">http://localhost:5000/
 
 If you didn't know already, the developers of Depth haven't included rounds within the dedicated servers, so you'll need to restart the server for each game you finish (and your game, which means you'll also have to reconnect each time, including your friends). This is what I had in mind when building the UI for the web client, hence why it's simply `restart server`. To make the restart as seamless as possible for you and your friends, you can combine the <b>Depth Controller</b>, with my <a href=https://github.com/Panos-Jr/Depth-Launcher><b>Depth Launcher</b></a>. More info on how to get started with that below.
 
-Quick note: If you are planning to do this on a LAN with your friends, you don't need to worry about using Caddy, and your friends can just use your local IP on the launcher.
+Quick note: If you are planning to do this on a LAN with your friends, you don't need to worry about using Caddy, and your friends can just use your local IP on the launcher. Like so, {private IP}:5000
+
+<img width="362" height="332" alt="image" src="https://github.com/user-attachments/assets/82207bbe-44b6-44ae-b152-bf6ae80decf9" />
+
 
 
 ## Caddy
