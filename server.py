@@ -15,11 +15,6 @@ from flask import Flask, jsonify, request, Response, send_from_directory
 
 app = Flask(__name__)
 
-
-# ---------------------------------------------------------------------------
-# Paths
-# ---------------------------------------------------------------------------
-
 def app_dir():
     if getattr(sys, 'frozen', False):
         return os.path.dirname(sys.executable)
@@ -33,11 +28,6 @@ MAPS_DIR            = os.path.join(BASE_DIR, "maps")
 CONFIG_FILE         = os.path.join(BASE_DIR, "config.json")
 STATIC_DIR          = os.path.join(BASE_DIR, "static")
 TEMPLATES_DIR       = os.path.join(BASE_DIR, "templates")
-
-
-# ---------------------------------------------------------------------------
-# Map definitions
-# ---------------------------------------------------------------------------
 
 MAPS = {
     "Antiguo":    "Antiguo",
@@ -58,11 +48,6 @@ MAPS = {
 }
 MAP_KEYS = list(MAPS.keys())
 
-
-# ---------------------------------------------------------------------------
-# State
-# ---------------------------------------------------------------------------
-
 _lock = threading.Lock()
 _server_state = {
     "map_index":   0,
@@ -78,11 +63,6 @@ DEFAULT_DEPTH_PATHS = [
     r"C:\Games\Depth",
     r"C:\Program Files (x86)\Steam\steamapps\common\Depth",
 ]
-
-
-# ---------------------------------------------------------------------------
-# Helpers
-# ---------------------------------------------------------------------------
 
 def detect_game_dir() -> str:
     existing  = [p for p in DEFAULT_DEPTH_PATHS if os.path.isdir(p)]
@@ -137,11 +117,6 @@ def read_status() -> dict:
     except FileNotFoundError:
         return write_status("idle", "Server controller started")
 
-
-# ---------------------------------------------------------------------------
-# Server lifecycle
-# ---------------------------------------------------------------------------
-
 def restart_sequence(map_name: str, is_lan: bool, num_humans: int, allow_bots: bool):
     try:
         _server_state["current_map"] = map_name
@@ -184,11 +159,6 @@ def restart_sequence(map_name: str, is_lan: bool, num_humans: int, allow_bots: b
 
     except Exception as e:
         write_status("error", str(e))
-
-
-# ---------------------------------------------------------------------------
-# Static assets
-# ---------------------------------------------------------------------------
 
 @app.route("/anchor.png")
 def anchor_icon():
