@@ -14,7 +14,7 @@ Check that your IP is static.
 
 ## Accessing the web client
 The app itself will be running in the background and can be found on your tray, as shown.
-Accessing the web client is simple, just right-click and press <b>Open Controller</b> <br>
+Accessing the web client is simple, just right-click and press <b>Open Controller</b>, or just left click the icon. <br>
 <img width="234" height="114" alt="image" src="https://github.com/user-attachments/assets/9f6d2a6d-c894-4dd7-828e-16002e33a494" />
 
 or you can access it via <a href="http://localhost:5000/">http://localhost:5000/</a>.
