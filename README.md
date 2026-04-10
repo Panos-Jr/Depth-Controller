@@ -16,6 +16,8 @@ or you can access it via <a href="http://localhost:5000/">http://localhost:5000/
 
 If you didn't know already, the developers of Depth haven't included rounds within the dedicated servers, so you'll need to restart the server for each game you finish (and your game, which means you'll also have to reconnect each time, including your friends). This is what I had in mind when building the UI for the web client, hence why it's simply `restart server`. To make the restart as seamless as possible for you and your friends, you can combine the <b>Depth Controller</b>, with my <a href=https://github.com/Panos-Jr/Depth-Launcher><b>Depth Launcher</b></a>. More info on how to get started with that below.
 
+Quick note: If you are planning to do this on a LAN with your friends, you don't need to worry about using Caddy, and your friends can just use your local IP on the launcher.
+
 
 ## Caddy
 To get the web client accessible outside your home network, you'll need to setup a reverse proxy, I'll be showing you how to get started with Caddy, though any alternatives like nginx should suffice.
@@ -37,6 +39,10 @@ Once you've got <b>Depth Controller</b> open, you can run the command `caddy run
 and the web client should be accessible using your domain.
 
 Now take that domain, and apply it to <a href=https://github.com/Panos-Jr/Depth-Launcher><b>Depth Launcher</b></a>, which will check when the server restarts and will restart your game for you. Or start it if it isn't already, and connect to the dedicated server. (Keep <b>Depth Launcher</b> in your game files, inside the Depth folder)
+
+## Issues
+
+If you do install <b>Depth Controller</b> to the Program Files directory make sure you run it as <b>administrator</b>.  Doesn't function correctly if ran normally. Should be fine anywhere else though.
 
 
 ## Credits
