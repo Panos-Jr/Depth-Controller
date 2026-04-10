@@ -13,14 +13,14 @@ from PIL import Image
 import subprocess
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from server import app, write_status, get_executable_dir
+from server import app, write_status, get_resource_path
 from waitress import serve
 
 PORT        = 5000
 DASHBOARD_URL = f"http://127.0.0.1:{PORT}/"
 
 def load_icon() -> Image.Image:
-    icon_path = os.path.join(get_executable_dir(), "anchor.png")
+    icon_path = os.path.join(get_resource_path(), "anchor.png")
     return Image.open(icon_path)
 
 def run_server():
