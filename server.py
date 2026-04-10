@@ -11,23 +11,35 @@ import time
 import os
 from datetime import datetime
 from waitress import serve
+import sys
 from flask import Flask, jsonify, request, Response, send_from_directory
 
-app = Flask(__name__)
+def get_resource_path(relative_path):
+    if getattr(sys, 'frozen', False):
+        base_path = sys._MEIPASS # type: ignore
+    else:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
 
-def app_dir():
+def get_executable_dir():
     if getattr(sys, 'frozen', False):
         return os.path.dirname(sys.executable)
     return os.path.dirname(os.path.abspath(__file__))
 
+EXE_DIR         = get_executable_dir()
+STATUS_FILE     = os.path.join(EXE_DIR, "status.json")
+CONFIG_FILE     = os.path.join(EXE_DIR, "config.json")
+
+STATIC_DIR      = get_resource_path("static")
+TEMPLATES_DIR   = get_resource_path("templates")
+MAPS_DIR        = get_resource_path("maps")
+ANCHOR_ICON_DIR = get_resource_path("")
+
+app = Flask(__name__, 
+            static_folder=STATIC_DIR, 
+            template_folder=TEMPLATES_DIR)
 
 SERVER_STARTUP_WAIT = 10
-BASE_DIR            = app_dir()
-STATUS_FILE         = os.path.join(BASE_DIR, "status.json")
-MAPS_DIR            = os.path.join(BASE_DIR, "maps")
-CONFIG_FILE         = os.path.join(BASE_DIR, "config.json")
-STATIC_DIR          = os.path.join(BASE_DIR, "static")
-TEMPLATES_DIR       = os.path.join(BASE_DIR, "templates")
 
 MAPS = {
     "Antiguo":    "Antiguo",
@@ -71,7 +83,6 @@ def detect_game_dir() -> str:
     non_steam = [p for p in existing if "steamapps" not in p.lower()]
     return non_steam[0] if non_steam else existing[0]
 
-
 def load_config() -> dict:
     detected       = detect_game_dir()
     default_config = {"base_game_dir": detected}
@@ -85,15 +96,12 @@ def load_config() -> dict:
     except Exception:
         return default_config
 
-
 def save_config(data: dict):
     with _lock:
         with open(CONFIG_FILE, "w") as f:
             json.dump(data, f, indent=2)
 
-
 _config = load_config()
-
 
 def write_status(state: str, message: str = ""):
     payload = {
@@ -108,7 +116,6 @@ def write_status(state: str, message: str = ""):
     print(f"[status] {state} — {message}")
     return payload
 
-
 def read_status() -> dict:
     try:
         with _lock:
@@ -120,14 +127,12 @@ def read_status() -> dict:
 def restart_sequence(map_name: str, is_lan: bool, num_humans: int, allow_bots: bool):
     try:
         _server_state["current_map"] = map_name
-
         write_status("stopping", "Killing server and game processes...")
         subprocess.run(["taskkill", "/f", "/im", "DepthServer.exe"], capture_output=True)
         subprocess.run(["taskkill", "/f", "/im", "DepthGame.exe"],   capture_output=True)
         time.sleep(2)
 
         lan_str = "true" if is_lan else "false"
-
         cmd_map = (
             f"{map_name}?Game=DepthGame.DPGameInfo"
             f"?bIsLanMatch={lan_str}"
@@ -152,7 +157,6 @@ def restart_sequence(map_name: str, is_lan: bool, num_humans: int, allow_bots: b
 
         write_status("waiting", f"Waiting {SERVER_STARTUP_WAIT}s for map load...")
         time.sleep(SERVER_STARTUP_WAIT)
-
         write_status("ready", f"Server ready on {MAPS.get(map_name, map_name)}")
         time.sleep(60)
         write_status("idle", "Session in progress")
@@ -162,23 +166,19 @@ def restart_sequence(map_name: str, is_lan: bool, num_humans: int, allow_bots: b
 
 @app.route("/anchor.png")
 def anchor_icon():
-    return send_from_directory(BASE_DIR, "anchor.png")
-
+    return send_from_directory(ANCHOR_ICON_DIR, "anchor.png")
 
 @app.route("/static/<path:filename>")
 def static_files(filename):
     return send_from_directory(STATIC_DIR, filename)
 
-
 @app.route("/maps/<map_name>/<filename>")
 def map_image(map_name, filename):
     return send_from_directory(os.path.join(MAPS_DIR, map_name), filename)
 
-
 @app.route("/config")
 def get_config():
     return jsonify(_config)
-
 
 @app.route("/config", methods=["POST"])
 def update_config():
@@ -188,34 +188,27 @@ def update_config():
         save_config(_config)
     return jsonify({"ok": True, **_config})
 
-
 @app.route("/browse-folder", methods=["POST"])
 def browse_folder():
     import tkinter as tk
     from tkinter import filedialog
-
     root = tk.Tk()
     root.withdraw()
     root.attributes("-topmost", True)
-
     selected = filedialog.askdirectory(
         title="Select your Depth game folder",
         initialdir=_config.get("base_game_dir") or "C:\\"
     )
     root.destroy()
-
     if selected:
         _config["base_game_dir"] = selected
         save_config(_config)
         return jsonify({"ok": True, "base_game_dir": selected})
-
     return jsonify({"ok": False, "base_game_dir": _config.get("base_game_dir", "")})
-
 
 @app.route("/status")
 def status():
     return jsonify(read_status())
-
 
 @app.route("/maps")
 def maps():
@@ -229,15 +222,12 @@ def maps():
         "current_map":   _server_state["current_map"],
     })
 
-
 @app.route("/restart", methods=["POST"])
 def restart():
     current = read_status()
     if current["state"] in ("stopping", "starting", "waiting"):
         return jsonify({"error": "Restart already in progress", "state": current["state"]}), 409
-
     body = request.get_json(silent=True) or {}
-
     if _server_state["rotation_on"]:
         _server_state["map_index"] = (_server_state["map_index"] + 1) % len(MAP_KEYS)
         map_name = MAP_KEYS[_server_state["map_index"]]
@@ -249,7 +239,6 @@ def restart():
     is_lan     = bool(body.get("is_lan",     _server_state["is_lan"]))
     num_humans = int(body.get("num_humans",  _server_state["num_humans"]))
     allow_bots = bool(body.get("allow_bots", _server_state["allow_bots"]))
-
     if not (1 <= num_humans <= 6):
         return jsonify({"error": "num_humans must be between 1 and 6"}), 400
 
@@ -262,41 +251,31 @@ def restart():
         args=(map_name, is_lan, num_humans, allow_bots),
         daemon=True,
     ).start()
-
     return jsonify({"ok": True, "map": map_name})
-
 
 @app.route("/settings", methods=["POST"])
 def settings():
     body = request.get_json(silent=True) or {}
-
     if "rotation_on" in body:
         _server_state["rotation_on"] = bool(body["rotation_on"])
-
     if "map_index" in body:
         idx = int(body["map_index"])
         if 0 <= idx < len(MAP_KEYS):
             _server_state["map_index"] = idx
-
     if "is_lan" in body:
         _server_state["is_lan"] = bool(body["is_lan"])
-
     if "num_humans" in body:
         val = int(body["num_humans"])
         if 1 <= val <= 6:
             _server_state["num_humans"] = val
-
     if "allow_bots" in body:
         _server_state["allow_bots"] = bool(body["allow_bots"])
-
     return jsonify({"ok": True, **_server_state})
-
 
 def _load_template() -> str:
     path = os.path.join(TEMPLATES_DIR, "dashboard.html")
     with open(path, "r", encoding="utf-8") as f:
         return f.read()
-
 
 @app.route("/")
 def dashboard():
@@ -309,11 +288,8 @@ def dashboard():
         f"const CONFIG       = {json.dumps(_config)};\n"
         "</script>"
     )
-
     html = _load_template().replace("__INLINE_DATA__", inline_data)
     return Response(html, mimetype="text/html")
-
-
 
 if __name__ == "__main__":
     write_status("idle", "Server controller started")
