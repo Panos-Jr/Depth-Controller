@@ -57,6 +57,7 @@ MAPS = {
     "Station":    "Station",
     "Temple":     "Temple",
     "Wreck":      "Wreck",
+    "Labs":       "Containment",
 }
 MAP_KEYS = list(MAPS.keys())
 
