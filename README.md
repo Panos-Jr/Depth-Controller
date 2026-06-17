@@ -10,6 +10,10 @@ Ports `80` and `443` forwarded on your router if you're using Caddy
 
 Your dedicated server will be using port `7777` make sure that's port forwarded.
 
+Add inbound rule on your firewall for port 5000 (TCP). You can use this command if you prefer:
+`netsh advfirewall firewall add rule name="Depth Controller" protocol=TCP dir=in localport=5000 action=allow`
+
+
 Check that your IP is static.
 
 ## Accessing the web client
